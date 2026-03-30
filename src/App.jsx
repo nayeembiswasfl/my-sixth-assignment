@@ -12,10 +12,32 @@ const stats = [
 
 function App() {
   const [activeView, setActiveView] = useState('products');
-  const cartCount = 0;
+  const [cartItems, setCartItems] = useState([]);
+
+  const cartCount = cartItems.length;
+  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   const openProducts = () => setActiveView('products');
   const openCart = () => setActiveView('cart');
+
+  const handleAddToCart = (product) => {
+    const alreadyAdded = cartItems.some((item) => item.id === product.id);
+
+    if (alreadyAdded) {
+      return;
+    }
+
+    setCartItems((currentItems) => [...currentItems, product]);
+  };
+
+  const handleRemoveFromCart = (productId) => {
+    setCartItems((currentItems) => currentItems.filter((item) => item.id !== productId));
+  };
+
+  const handleCheckout = () => {
+    setCartItems([]);
+    setActiveView('products');
+  };
 
   return (
     <div className="page-shell">
@@ -176,63 +198,125 @@ function App() {
 
           {activeView === 'products' ? (
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {products.map((product) => (
-                <article
-                  key={product.id}
-                  className="rounded-[22px] border border-brand-border bg-white p-5 shadow-[0_16px_35px_rgba(15,23,42,0.04)]"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <IconFrame icon={product.icon} />
-                    <TagBadge tag={product.tag} label={product.tagType} />
-                  </div>
+              {products.map((product) => {
+                const isAdded = cartItems.some((item) => item.id === product.id);
 
-                  <h3 className="mt-4 font-display text-lg font-bold text-brand-ink">
-                    {product.name}
-                  </h3>
-
-                  <p className="mt-2 min-h-[72px] text-sm leading-6 text-brand-muted">
-                    {product.description}
-                  </p>
-
-                  <div className="mt-4">
-                    <p className="font-display text-[30px] font-extrabold text-brand-ink">
-                      {formatPrice(product.price)}
-                    </p>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                      {formatPeriod(product.period)}
-                    </p>
-                  </div>
-
-                  <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-[13px] text-slate-600">
-                    {product.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2.5">
-                        <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-mist text-brand-violet">
-                          <CheckIcon />
-                        </span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    type="button"
-                    className="mt-5 w-full rounded-full bg-brand-gradient px-4 py-3 text-sm font-bold text-white shadow-soft transition hover:brightness-105"
+                return (
+                  <article
+                    key={product.id}
+                    className="rounded-[22px] border border-brand-border bg-white p-5 shadow-[0_16px_35px_rgba(15,23,42,0.04)]"
                   >
-                    Buy Now
-                  </button>
-                </article>
-              ))}
+                    <div className="flex items-start justify-between gap-4">
+                      <IconFrame icon={product.icon} />
+                      <TagBadge tag={product.tag} label={product.tagType} />
+                    </div>
+
+                    <h3 className="mt-4 font-display text-lg font-bold text-brand-ink">
+                      {product.name}
+                    </h3>
+
+                    <p className="mt-2 min-h-[72px] text-sm leading-6 text-brand-muted">
+                      {product.description}
+                    </p>
+
+                    <div className="mt-4">
+                      <p className="font-display text-[30px] font-extrabold text-brand-ink">
+                        {formatPrice(product.price)}
+                      </p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                        {formatPeriod(product.period)}
+                      </p>
+                    </div>
+
+                    <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-[13px] text-slate-600">
+                      {product.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5">
+                          <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-mist text-brand-violet">
+                            <CheckIcon />
+                          </span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <button
+                      type="button"
+                      onClick={() => handleAddToCart(product)}
+                      disabled={isAdded}
+                      className={`mt-5 w-full rounded-full px-4 py-3 text-sm font-bold transition ${
+                        isAdded
+                          ? 'cursor-not-allowed bg-emerald-100 text-emerald-700'
+                          : 'bg-brand-gradient text-white shadow-soft hover:brightness-105'
+                      }`}
+                    >
+                      {isAdded ? 'Added to Cart' : 'Buy Now'}
+                    </button>
+                  </article>
+                );
+              })}
             </div>
           ) : (
             <div className="mt-10 rounded-[28px] border border-brand-border bg-white p-6 shadow-card sm:p-8">
-              <div>
-                <h3 className="font-display text-3xl font-bold text-brand-ink">Your Cart</h3>
-                <p className="mt-2 max-w-2xl text-sm leading-7 text-brand-muted">
-                  Your selected products will appear here. Use the products tab to start building your cart.
-                </p>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h3 className="font-display text-3xl font-bold text-brand-ink">Your Cart</h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-7 text-brand-muted">
+                    Review your selected products, remove any item, or proceed to checkout when you are ready.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <span className="rounded-full bg-brand-mist px-4 py-2 text-sm font-semibold text-brand-violet">
+                    {cartCount} item{cartCount === 1 ? '' : 's'}
+                  </span>
+                  <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-brand-muted">
+                    {formatPrice(totalPrice)} total
+                  </span>
+                </div>
               </div>
 
-              <EmptyCartState onBrowse={openProducts} />
+              {cartItems.length ? (
+                <div className="mt-8 space-y-4">
+                  {cartItems.map((item) => (
+                    <article
+                      key={item.id}
+                      className="flex flex-col gap-4 rounded-[20px] bg-[#f8f8fc] px-5 py-5 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <IconFrame icon={item.icon} compact />
+                        <div>
+                          <h4 className="font-display text-lg font-bold text-brand-ink">{item.name}</h4>
+                          <p className="mt-1 text-sm text-brand-muted">{formatPrice(item.price)}</p>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveFromCart(item.id)}
+                        className="text-sm font-bold text-rose-500 transition hover:text-rose-600"
+                      >
+                        Remove
+                      </button>
+                    </article>
+                  ))}
+
+                  <div className="flex items-center justify-between border-t border-slate-200 pt-5">
+                    <span className="text-base font-semibold text-brand-muted">Total:</span>
+                    <span className="font-display text-4xl font-extrabold text-brand-ink">
+                      {formatPrice(totalPrice)}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleCheckout}
+                    className="w-full rounded-full bg-brand-gradient px-6 py-4 text-sm font-bold text-white shadow-soft transition hover:brightness-105"
+                  >
+                    Proceed To Checkout
+                  </button>
+                </div>
+              ) : (
+                <EmptyCartState onBrowse={openProducts} />
+              )}
             </div>
           )}
         </section>
@@ -264,9 +348,13 @@ function TagBadge({ tag, label }) {
   );
 }
 
-function IconFrame({ icon }) {
+function IconFrame({ icon, compact = false }) {
   return (
-    <span className="inline-flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#f5f1ff] text-brand-violet">
+    <span
+      className={`inline-flex items-center justify-center rounded-[18px] bg-[#f5f1ff] text-brand-violet ${
+        compact ? 'h-12 w-12' : 'h-14 w-14'
+      }`}
+    >
       <ToolIcon icon={icon} />
     </span>
   );
