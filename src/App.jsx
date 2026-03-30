@@ -1,3 +1,5 @@
+import headerImage from '../resources/head.png';
+
 const navLinks = ['Products', 'Features', 'Pricing', 'Testimonials', 'FAQ'];
 
 function App() {
@@ -67,17 +69,44 @@ function App() {
       </header>
 
       <main id="home" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        <section className="surface-card px-6 py-14 sm:px-10 sm:py-16">
-          <div className="max-w-2xl">
-            <p className="text-sm font-extrabold uppercase tracking-[0.34em] text-brand-violet">
-              Fraction 3
-            </p>
-            <h1 className="mt-5 font-display text-4xl font-extrabold tracking-tight text-brand-ink sm:text-5xl">
-              Top navigation is now in place
+        <section className="grid items-center gap-12 lg:grid-cols-[1.02fr,0.92fr] lg:py-8">
+          <div className="max-w-xl">
+            <span className="inline-flex rounded-full bg-brand-mist px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-brand-violet">
+              Premium productivity assets
+            </span>
+
+            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.02] tracking-tight text-brand-ink sm:text-5xl lg:text-[58px]">
+              Supercharge Your Digital Workflow
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-brand-muted sm:text-lg">
-              The page now has the brand logo, navigation links, cart icon, login action, get started button, and a responsive mobile menu.
+
+            <p className="mt-5 max-w-[500px] text-base leading-8 text-brand-muted sm:text-lg">
+              Explore a curated collection of digital products designed to help creators,
+              freelancers, and modern teams work faster with more clarity.
             </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <a
+                href="#products"
+                className="inline-flex rounded-full bg-brand-gradient px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:brightness-105 sm:px-6"
+              >
+                Explore Products
+              </a>
+              <a
+                href="#pricing"
+                className="inline-flex items-center gap-2.5 rounded-full border-2 border-brand-violet bg-transparent px-5 py-3 text-sm font-bold text-brand-violet transition hover:bg-brand-mist sm:px-6"
+              >
+                <PlayIcon />
+                <span>Watch Demo</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="mx-auto w-full max-w-[390px] lg:max-w-[430px]">
+            <img
+              src={headerImage}
+              alt="A person interacting with a digital interface"
+              className="aspect-square w-full rounded-[30px] object-cover shadow-card"
+            />
           </div>
         </section>
       </main>
@@ -101,6 +130,14 @@ function CartIcon() {
       <path d="M2.5 4H5l2.4 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.77L20.5 7H6.1" />
       <circle cx="9.5" cy="19" r="1.6" />
       <circle cx="17.4" cy="19" r="1.6" />
+    </svg>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current stroke-[2.2]">
+      <path d="m7 5 10 7-10 7V5Z" strokeLinejoin="round" />
     </svg>
   );
 }
