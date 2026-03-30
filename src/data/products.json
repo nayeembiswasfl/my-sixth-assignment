@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "name": "AI Writing Pro",
+    "description": "Create blog drafts, campaign copy, and polished client updates in minutes with guided prompts.",
+    "price": 29,
+    "period": "monthly",
+    "tag": "popular",
+    "tagType": "Popular",
+    "features": ["300+ marketing prompts", "Brand voice controls", "One-click content briefs"],
+    "icon": "spark-pen"
+  },
+  {
+    "id": 2,
+    "name": "Design Templates Pack",
+    "description": "Speed up social posts, landing pages, and pitch decks with polished templates for modern brands.",
+    "price": 49,
+    "period": "one-time",
+    "tag": "new",
+    "tagType": "New",
+    "features": ["120+ editable layouts", "Figma-ready exports", "Commercial use license"],
+    "icon": "pencil-ruler"
+  },
+  {
+    "id": 3,
+    "name": "Premium Stock Assets",
+    "description": "Access curated images, textures, and mockups that make product launches look instantly stronger.",
+    "price": 19,
+    "period": "monthly",
+    "tag": "best-seller",
+    "tagType": "Best Seller",
+    "features": ["5,000+ assets", "Fresh weekly drops", "Organized by campaign type"],
+    "icon": "gallery"
+  },
+  {
+    "id": 4,
+    "name": "Automation Toolkit",
+    "description": "Automate follow-ups, internal reminders, and repetitive admin tasks without writing custom scripts.",
+    "price": 79,
+    "period": "yearly",
+    "tag": "popular",
+    "tagType": "Popular",
+    "features": ["50 workflow recipes", "Zapier-friendly guides", "Team onboarding checklist"],
+    "icon": "zap"
+  },
+  {
+    "id": 5,
+    "name": "Resume Builder Pro",
+    "description": "Build recruiter-friendly resumes and polished cover letters tailored for modern job applications.",
+    "price": 15,
+    "period": "monthly",
+    "tag": "new",
+    "tagType": "New",
+    "features": ["ATS-ready formatting", "Role-based suggestions", "Export to PDF"],
+    "icon": "document"
+  },
+  {
+    "id": 6,
+    "name": "Social Media Calendar",
+    "description": "Plan a month of content with campaign prompts, caption ideas, and consistent publishing rhythms.",
+    "price": 39,
+    "period": "one-time",
+    "tag": "best-seller",
+    "tagType": "Best Seller",
+    "features": ["90-day planner", "Caption idea bank", "Launch checklist board"],
+    "icon": "megaphone"
+  },
+  {
+    "id": 7,
+    "name": "Client Portal Kit",
+    "description": "Present proposals, collect approvals, and share deliverables in a cleaner client experience.",
+    "price": 59,
+    "period": "one-time",
+    "tag": "popular",
+    "tagType": "Popular",
+    "features": ["Proposal sections", "Timeline widgets", "Client-ready handoff pages"],
+    "icon": "briefcase"
+  },
+  {
+    "id": 8,
+    "name": "Focus Sprint Planner",
+    "description": "Structure deep work blocks and weekly goals so your team ships faster with less context switching.",
+    "price": 12,
+    "period": "monthly",
+    "tag": "new",
+    "tagType": "New",
+    "features": ["Sprint planning board", "Weekly review prompts", "Priority scoring guide"],
+    "icon": "target"
+  },
+  {
+    "id": 9,
+    "name": "Creator Launch Bundle",
+    "description": "Bundle landing page copy, promo graphics, and checklist templates for your next digital release.",
+    "price": 99,
+    "period": "yearly",
+    "tag": "best-seller",
+    "tagType": "Best Seller",
+    "features": ["Launch calendar", "Campaign creative pack", "Conversion copy prompts"],
+    "icon": "rocket"
+  }
+]
