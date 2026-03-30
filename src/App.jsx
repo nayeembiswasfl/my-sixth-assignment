@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import headerImage from '../resources/head.png';
 import products from './data/products.json';
 
@@ -10,7 +11,11 @@ const stats = [
 ];
 
 function App() {
+  const [activeView, setActiveView] = useState('products');
   const cartCount = 0;
+
+  const openProducts = () => setActiveView('products');
+  const openCart = () => setActiveView('cart');
 
   return (
     <div className="page-shell">
@@ -48,6 +53,7 @@ function App() {
             <button
               type="button"
               aria-label="Open cart"
+              onClick={openCart}
               className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-ink transition hover:bg-brand-mist"
             >
               <CartIcon />
@@ -141,54 +147,94 @@ function App() {
             description="Choose from our curated collection of premium digital products designed to improve creativity and productivity."
           />
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <article
-                key={product.id}
-                className="rounded-[22px] border border-brand-border bg-white p-5 shadow-[0_16px_35px_rgba(15,23,42,0.04)]"
+          <div className="mt-8 flex justify-center">
+            <div className="inline-flex rounded-full border border-brand-border bg-white p-1 shadow-card">
+              <button
+                type="button"
+                onClick={openProducts}
+                className={`rounded-full px-6 py-3 text-sm font-semibold transition ${
+                  activeView === 'products'
+                    ? 'bg-brand-gradient text-white shadow-soft'
+                    : 'text-brand-muted'
+                }`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <IconFrame icon={product.icon} />
-                  <TagBadge tag={product.tag} label={product.tagType} />
-                </div>
-
-                <h3 className="mt-4 font-display text-lg font-bold text-brand-ink">
-                  {product.name}
-                </h3>
-
-                <p className="mt-2 min-h-[72px] text-sm leading-6 text-brand-muted">
-                  {product.description}
-                </p>
-
-                <div className="mt-4">
-                  <p className="font-display text-[30px] font-extrabold text-brand-ink">
-                    {formatPrice(product.price)}
-                  </p>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                    {formatPeriod(product.period)}
-                  </p>
-                </div>
-
-                <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-[13px] text-slate-600">
-                  {product.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5">
-                      <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-mist text-brand-violet">
-                        <CheckIcon />
-                      </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  type="button"
-                  className="mt-5 w-full rounded-full bg-brand-gradient px-4 py-3 text-sm font-bold text-white shadow-soft transition hover:brightness-105"
-                >
-                  Buy Now
-                </button>
-              </article>
-            ))}
+                Products
+              </button>
+              <button
+                type="button"
+                onClick={openCart}
+                className={`rounded-full px-6 py-3 text-sm font-semibold transition ${
+                  activeView === 'cart'
+                    ? 'bg-brand-gradient text-white shadow-soft'
+                    : 'text-brand-muted'
+                }`}
+              >
+                Cart ({cartCount})
+              </button>
+            </div>
           </div>
+
+          {activeView === 'products' ? (
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {products.map((product) => (
+                <article
+                  key={product.id}
+                  className="rounded-[22px] border border-brand-border bg-white p-5 shadow-[0_16px_35px_rgba(15,23,42,0.04)]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <IconFrame icon={product.icon} />
+                    <TagBadge tag={product.tag} label={product.tagType} />
+                  </div>
+
+                  <h3 className="mt-4 font-display text-lg font-bold text-brand-ink">
+                    {product.name}
+                  </h3>
+
+                  <p className="mt-2 min-h-[72px] text-sm leading-6 text-brand-muted">
+                    {product.description}
+                  </p>
+
+                  <div className="mt-4">
+                    <p className="font-display text-[30px] font-extrabold text-brand-ink">
+                      {formatPrice(product.price)}
+                    </p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                      {formatPeriod(product.period)}
+                    </p>
+                  </div>
+
+                  <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-[13px] text-slate-600">
+                    {product.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2.5">
+                        <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-mist text-brand-violet">
+                          <CheckIcon />
+                        </span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    type="button"
+                    className="mt-5 w-full rounded-full bg-brand-gradient px-4 py-3 text-sm font-bold text-white shadow-soft transition hover:brightness-105"
+                  >
+                    Buy Now
+                  </button>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-10 rounded-[28px] border border-brand-border bg-white p-6 shadow-card sm:p-8">
+              <div>
+                <h3 className="font-display text-3xl font-bold text-brand-ink">Your Cart</h3>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-brand-muted">
+                  Your selected products will appear here. Use the products tab to start building your cart.
+                </p>
+              </div>
+
+              <EmptyCartState onBrowse={openProducts} />
+            </div>
+          )}
         </section>
       </main>
     </div>
@@ -223,6 +269,27 @@ function IconFrame({ icon }) {
     <span className="inline-flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#f5f1ff] text-brand-violet">
       <ToolIcon icon={icon} />
     </span>
+  );
+}
+
+function EmptyCartState({ onBrowse }) {
+  return (
+    <div className="mt-8 rounded-[22px] border border-dashed border-slate-200 bg-[#f8f8fc] px-6 py-16 text-center">
+      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white text-brand-violet shadow-card">
+        <CartIcon />
+      </div>
+      <h3 className="mt-6 font-display text-2xl font-bold text-brand-ink">Your cart is empty</h3>
+      <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-brand-muted">
+        Browse the product collection to add premium tools, templates, and digital resources to your cart.
+      </p>
+      <button
+        type="button"
+        onClick={onBrowse}
+        className="mt-6 rounded-full bg-brand-gradient px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:brightness-105"
+      >
+        Browse Products
+      </button>
+    </div>
   );
 }
 
