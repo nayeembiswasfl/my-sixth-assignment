@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import headerImage from '../resources/head.png';
 import products from './data/products.json';
 
@@ -24,19 +25,34 @@ function App() {
     const alreadyAdded = cartItems.some((item) => item.id === product.id);
 
     if (alreadyAdded) {
+      toast.info(`${product.name} is already in your cart.`);
       return;
     }
 
     setCartItems((currentItems) => [...currentItems, product]);
+    toast.success(`${product.name} added to cart.`);
   };
 
   const handleRemoveFromCart = (productId) => {
+    const selectedProduct = cartItems.find((item) => item.id === productId);
+
+    if (!selectedProduct) {
+      return;
+    }
+
     setCartItems((currentItems) => currentItems.filter((item) => item.id !== productId));
+    toast.error(`${selectedProduct.name} removed from cart.`);
   };
 
   const handleCheckout = () => {
+    if (!cartItems.length) {
+      toast.info('Your cart is empty. Add a product before checkout.');
+      return;
+    }
+
     setCartItems([]);
     setActiveView('products');
+    toast.success('Checkout complete. Your cart is now clear.');
   };
 
   return (
