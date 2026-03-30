@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import headerImage from '../resources/head.png';
+import stepUserImage from '../resources/user.png';
+import stepPackageImage from '../resources/package.png';
+import stepRocketImage from '../resources/rocket.png';
 import products from './data/products.json';
 
 const navLinks = ['Products', 'Features', 'Pricing', 'Testimonials', 'FAQ'];
@@ -9,6 +12,54 @@ const stats = [
   { value: '50K+', label: 'Active Users' },
   { value: '200+', label: 'Premium Tools' },
   { value: '4.9', label: 'Ratings' },
+];
+
+const steps = [
+  {
+    id: 1,
+    title: 'Create Account',
+    description: 'Sign up for free in seconds. No credit card required to get started.',
+    icon: stepUserImage,
+  },
+  {
+    id: 2,
+    title: 'Choose Products',
+    description: 'Browse our catalog and select the tools that fit your needs.',
+    icon: stepPackageImage,
+  },
+  {
+    id: 3,
+    title: 'Start Creating',
+    description: 'Download and start using your premium tools immediately.',
+    icon: stepRocketImage,
+  },
+];
+
+const pricingPlans = [
+  {
+    name: 'Starter',
+    price: '$0',
+    description: 'Perfect for getting started',
+    features: ['Access to 10 free tools', 'Basic templates', 'Community support', '1 project per month'],
+    cta: 'Get Started Free',
+    featured: false,
+  },
+  {
+    name: 'Pro',
+    price: '$29',
+    description: 'Best for professionals',
+    features: ['Access to all premium tools', 'Unlimited templates', 'Priority support', 'Unlimited projects', 'Cloud sync', 'Advanced analytics'],
+    cta: 'Start Pro Trial',
+    featured: true,
+  },
+  {
+    name: 'Enterprise',
+    price: '$99',
+    description: 'For teams and businesses',
+    features: ['Everything in Pro', 'Team collaboration', 'Custom integrations', 'Dedicated support', 'SLA guarantee', 'Custom branding'],
+    cta: 'Contact Sales',
+    featured: false,
+  },
 ];
 
 function App() {
@@ -336,6 +387,107 @@ function App() {
             </div>
           )}
         </section>
+
+        <section id="steps" className="bg-[#fbfbff] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="font-display text-[42px] font-extrabold leading-tight text-brand-ink md:text-[56px]">
+                Get Started In 3 Steps
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-brand-muted">
+                Start using premium digital tools in minutes, not hours.
+              </p>
+            </div>
+
+            <div className="mt-14 grid gap-8 md:grid-cols-3">
+              {steps.map((step) => (
+                <article
+                  key={step.id}
+                  className="relative flex min-h-[376px] flex-col items-center rounded-[20px] border border-[#ececf3] bg-white px-8 pb-10 pt-16 text-center shadow-[0_12px_24px_rgba(15,23,42,0.04)]"
+                >
+                  <span className="absolute right-5 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-violet text-sm font-extrabold text-white shadow-soft">
+                    {String(step.id).padStart(2, '0')}
+                  </span>
+                  <span className="inline-flex h-[100px] w-[100px] items-center justify-center rounded-full bg-[#efe3ff] text-brand-violet">
+                    <StepIcon icon={step.icon} />
+                  </span>
+                  <h3 className="mt-6 font-display text-[24px] font-extrabold leading-tight text-brand-ink md:text-[28px]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-5 max-w-[290px] text-[15px] leading-8 text-brand-muted">
+                    {step.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="bg-[#fcfcff] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="font-display text-[48px] font-extrabold leading-tight text-brand-ink">
+                Simple, Transparent Pricing
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-brand-muted">
+                Choose the plan that fits your needs. Upgrade or downgrade anytime.
+              </p>
+            </div>
+
+            <div className="mt-14 grid gap-7 lg:grid-cols-3">
+              {pricingPlans.map((plan) => (
+                <article
+                  key={plan.name}
+                  className={`relative flex min-h-[500px] flex-col rounded-[20px] border p-6 md:p-7 ${
+                    plan.featured
+                      ? 'border-brand-violet bg-gradient-to-br from-[#6427ff] via-[#8b23ff] to-[#bf18ff] text-white shadow-[0_20px_50px_rgba(124,58,237,0.38)]'
+                      : 'border-[#e7e8ef] bg-white text-brand-ink shadow-[0_12px_24px_rgba(15,23,42,0.06)]'
+                  }`}
+                >
+                  {plan.featured ? (
+                    <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ffe7a6] px-4 py-2 text-sm font-bold text-[#d8791c] shadow-[0_10px_24px_rgba(255,231,166,0.18)]">
+                      Most Popular
+                    </span>
+                  ) : null}
+
+                  <h3 className="text-[22px] font-extrabold text-current">{plan.name}</h3>
+                  <p className={`mt-2 text-[15px] ${plan.featured ? 'text-white/80' : 'text-[#7f90a4]'}`}>
+                    {plan.description}
+                  </p>
+
+                  <div className="mt-8 flex items-end gap-1.5">
+                    <span className="font-display text-[54px] font-extrabold leading-none">{plan.price}</span>
+                    <span className={`pb-1 text-[18px] ${plan.featured ? 'text-white/80' : 'text-[#7f90a4]'}`}>
+                      /Month
+                    </span>
+                  </div>
+
+                  <ul className="mt-8 space-y-3.5 text-[15px] leading-7">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <span className={`mt-1.5 inline-flex [transform:scale(1.35)] ${plan.featured ? 'text-white' : 'text-[#33c36b]'}`}>
+                          <CheckIcon />
+                        </span>
+                        <span className={plan.featured ? 'text-white' : 'text-[#6d7f94]'}>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    type="button"
+                    className={`mt-auto w-full rounded-full px-6 py-4 text-[17px] font-extrabold transition ${
+                      plan.featured
+                        ? 'bg-white text-brand-violet hover:bg-slate-100'
+                        : 'bg-brand-gradient text-white hover:brightness-105'
+                    }`}
+                  >
+                    {plan.cta}
+                  </button>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
@@ -395,6 +547,10 @@ function EmptyCartState({ onBrowse }) {
       </button>
     </div>
   );
+}
+
+function StepIcon({ icon }) {
+  return <img src={icon} alt="" className="h-10 w-10 object-contain" />;
 }
 
 function MenuIcon() {
